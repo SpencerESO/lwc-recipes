@@ -6,6 +6,11 @@
 
 const events = {};
 
+/**
+ * Confirm that two page references have the same attributes
+ * @param {object} pageRef1 - The first page reference
+ * @param {object} pageRef2 - The second page reference
+ */
 const samePageRef = (pageRef1, pageRef2) => {
     const obj1 = pageRef1.attributes;
     const obj2 = pageRef2.attributes;
@@ -26,7 +31,7 @@ const registerListener = (eventName, callback, thisArg) => {
     // Checking that the listener has a pageRef property. We rely on that property for filtering purpose in fireEvent()
     if (!thisArg.pageRef) {
         throw new Error(
-            'pubsub listeners need a "@wire(CurrentPageReference) pageRef" property',
+            'pubsub listeners need a "@wire(CurrentPageReference) pageRef" property'
         );
     }
 
@@ -51,7 +56,7 @@ const unregisterListener = (eventName, callback, thisArg) => {
     if (events[eventName]) {
         events[eventName] = events[eventName].filter(
             listener =>
-                listener.callback !== callback || listener.thisArg !== thisArg,
+                listener.callback !== callback || listener.thisArg !== thisArg
         );
     }
 };
@@ -63,7 +68,7 @@ const unregisterListener = (eventName, callback, thisArg) => {
 const unregisterAllListeners = thisArg => {
     Object.keys(events).forEach(eventName => {
         events[eventName] = events[eventName].filter(
-            listener => listener.thisArg !== thisArg,
+            listener => listener.thisArg !== thisArg
         );
     });
 };
@@ -93,5 +98,5 @@ export {
     registerListener,
     unregisterListener,
     unregisterAllListeners,
-    fireEvent,
+    fireEvent
 };
